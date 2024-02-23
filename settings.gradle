@@ -1,4 +1,0 @@
-rootProject.name = 'musicstorage'
-include 'service-resource'
-include 'service-song'
-
