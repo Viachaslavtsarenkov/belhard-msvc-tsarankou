@@ -2,7 +2,7 @@ package by.tsarankou.serviceresource.service.impl;
 
 import by.tsarankou.serviceresource.data.Resource;
 import by.tsarankou.serviceresource.data.repository.ResourceRepository;
-import by.tsarankou.serviceresource.service.MediaDataService;
+import by.tsarankou.serviceresource.service.MetaDataService;
 import by.tsarankou.serviceresource.service.ResourceService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ import java.sql.Blob;
 public class ResourceServiceImpl implements ResourceService {
 
     final ResourceRepository resourceRepository;
-    final MediaDataService mediaDataService;
+    final MetaDataService mediaDataService;
     @Override
     public int uploadDataFile(MultipartFile audioFile) {
         try {
@@ -33,7 +33,6 @@ public class ResourceServiceImpl implements ResourceService {
             System.out.println(e.getMessage());
             //todo
         }
-
         return 0;
     }
 }
