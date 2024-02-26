@@ -21,7 +21,7 @@ import java.io.Serializable;
 import java.sql.Blob;
 
 @Entity
-@Table(name = "resource")
+@Table(name = "Resource")
 @Getter
 @Setter
 @Builder
@@ -38,6 +38,6 @@ public class Resource implements Serializable {
 
     @Column(name="audioFile")
     @Lob
-    private Blob audioFile;
+    private byte[] audioFile;
 
 }
