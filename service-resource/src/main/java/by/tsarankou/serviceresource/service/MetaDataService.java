@@ -12,20 +12,28 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.xml.sax.SAXException;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @NoArgsConstructor
 public class MetaDataService {
-    private List<String> fileDescription = List.of("xmpDM:artist", "title", "xmpDM:duration", "xmpDM:releaseDate", "xmpDM:album");
+    private final List<String> fileDescription = List.of("xmpDM:artist",
+            "title",
+            "xmpDM:duration",
+            "xmpDM:releaseDate",
+            "xmpDM:album");
 
     public MetaDataDTO getMetaDataFromFile(MultipartFile audioFile) throws IOException, TikaException, SAXException {
         BodyContentHandler handler = new BodyContentHandler();
         Metadata metadata = new Metadata();
-
+        //todo
         File tempDir = Files.createTempDir();
         File localFile = Paths.get(tempDir.getAbsolutePath(), "audio.mp3").toFile();
 
@@ -40,25 +48,21 @@ public class MetaDataService {
 
         FileInputStream inputstream = new FileInputStream(localFile);
         ParseContext pcontext = new ParseContext();
-
         Mp3Parser Mp3Parser = new  Mp3Parser();
         Mp3Parser.parse(inputstream, handler, metadata, pcontext);
-
         String[] metadataNames = metadata.names();
 
-        for(String name : metadataNames) {
-            System.out.println(name + ": " + metadata.get(name));
-        }
+        Map<String, String> audioDescription = Arrays.stream(metadataNames)
+                .filter(fileDescription::contains)
+                .collect(Collectors.toMap(c -> c, metadata::get));
 
-        fileDescription  = Arrays.stream(metadataNames).filter(fileDescription::contains).toList();
-
-        return null;
-//                MetaDataDTO.builder()
-//                .album(metadata.get(fileDescription"xmpDM:album"))
-//                .year(Integer.parseInt(metadata.get("xmpDM:releaseDate")))
-//                .artist(metadata.get("xmpDM:artist"))
-//                .name("title")
-//                .length(metadata.get("xmpDM:duration"))
-//                .build();
+        return  MetaDataDTO.builder()
+                  .artist(audioDescription.getOrDefault(fileDescription.get(0), ""))
+                .name(audioDescription.getOrDefault(fileDescription.get(1), ""))
+                .length(audioDescription.getOrDefault(fileDescription.get(2), ""))
+                //todo
+               // .year(Integer.parseInt(audioDescription.getOrDefault(fileDescription.get(3),"0")))
+                .album(audioDescription.getOrDefault(fileDescription.get(4), ""))
+                .build();
     }
 }
