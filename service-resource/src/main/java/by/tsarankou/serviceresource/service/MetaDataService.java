@@ -30,24 +30,13 @@ public class MetaDataService {
             "xmpDM:releaseDate",
             "xmpDM:album");
 
-    public MetaDataDTO getMetaDataFromFile(MultipartFile audioFile) throws IOException, TikaException, SAXException {
+    public MetaDataDTO getMetaDataFromFile(File audioFile) throws IOException, TikaException, SAXException {
         BodyContentHandler handler = new BodyContentHandler();
         Metadata metadata = new Metadata();
-        //todo
-        File tempDir = Files.createTempDir();
-        File localFile = Paths.get(tempDir.getAbsolutePath(), "audio.mp3").toFile();
 
-        try {
-            if (!localFile.exists()) {
-                localFile.mkdirs();
-            }
-            audioFile.transferTo(localFile);
-        } catch (Exception e) {
-            //todo
-        }
-
-        FileInputStream inputstream = new FileInputStream(localFile);
+        FileInputStream inputstream = new FileInputStream(audioFile);
         ParseContext pcontext = new ParseContext();
+
         Mp3Parser Mp3Parser = new  Mp3Parser();
         Mp3Parser.parse(inputstream, handler, metadata, pcontext);
         String[] metadataNames = metadata.names();
@@ -60,8 +49,7 @@ public class MetaDataService {
                   .artist(audioDescription.getOrDefault(fileDescription.get(0), ""))
                 .name(audioDescription.getOrDefault(fileDescription.get(1), ""))
                 .length(audioDescription.getOrDefault(fileDescription.get(2), ""))
-                //todo
-               // .year(Integer.parseInt(audioDescription.getOrDefault(fileDescription.get(3),"0")))
+                .year(Integer.parseInt(audioDescription.getOrDefault(fileDescription.get(3),"0")))
                 .album(audioDescription.getOrDefault(fileDescription.get(4), ""))
                 .build();
     }
