@@ -13,3 +13,10 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
   servlet.multipart.max-file-size: 10MB
   servlet.multipart.max-request-size: 10MB
+my:
+  client:
+    audio:
+     scheme: http
+     host: localhost
+     port: 8081
+     endpoint: songs

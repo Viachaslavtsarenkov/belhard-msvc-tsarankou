@@ -1,13 +1,10 @@
-package by.tsarankou.serviceresource.data;
-
-
+package by.tsarankou.servicesong.data;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,26 +15,31 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
-import java.sql.Blob;
 
 @Entity
-@Table(name = "resource")
+@Table(name = "audio")
 @Getter
 @Setter
-@Builder
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @EqualsAndHashCode
-public class Resource implements Serializable {
+@Builder
+public class Audio implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private int id;
-
-    @Column(name="audioFile")
-    @Lob
-    private Blob audioFile;
-
+    @Column(name = "name")
+    private String name;
+    @Column(name = "artist")
+    private String artist;
+    @Column(name = "album")
+    private String album;
+    @Column(name = "length")
+    private String length;
+    @Column(name = "resourceId")
+    private int resourceId;
+    @Column(name = "year")
+    private int year;
 }

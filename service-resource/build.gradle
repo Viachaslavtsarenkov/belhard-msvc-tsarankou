@@ -28,6 +28,8 @@ dependencies {
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'org.apache.tika:tika-parsers:1.20'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 }
 
 tasks.named('test') {
