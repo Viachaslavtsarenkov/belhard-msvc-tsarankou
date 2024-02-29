@@ -1,12 +1,19 @@
 package by.tsarankou.serviceresource.service;
 
 import by.tsarankou.serviceresource.data.Resource;
-import org.springframework.web.multipart.MultipartFile;
+import by.tsarankou.serviceresource.dto.IdDTO;
+import by.tsarankou.serviceresource.dto.IdsDTO;
+import jakarta.transaction.Transactional;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.List;
 
 public interface ResourceService {
-    int uploadDataFile(byte[] audioFile);
+    @Transactional
+    IdDTO uploadDataFile(File audioFile) throws IOException;
+    @Transactional
     Resource findResourceById(Integer id);
-    Integer[] deleteAllResourcesByIds(Integer[] ids);
+    @Transactional
+    IdsDTO deleteAllResourcesByIds(List<Integer> ids);
 }
