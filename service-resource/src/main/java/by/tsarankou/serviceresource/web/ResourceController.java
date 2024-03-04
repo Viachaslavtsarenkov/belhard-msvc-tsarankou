@@ -32,7 +32,7 @@ public class ResourceController {
 
     private final ResourceService resourceService;
 
-    @PostMapping()
+    @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<IdDTO> uploadNewResource(@RequestParam(name = "audioFile")MultipartFile audioFile) throws IOException {
 
         File convFile = new File( audioFile.getOriginalFilename() );

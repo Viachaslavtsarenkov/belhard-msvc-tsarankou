@@ -8,7 +8,6 @@ import by.tsarankou.servicesong.service.AudioService;
 import by.tsarankou.servicesong.service.exception.NotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -52,7 +51,7 @@ public class AudioServiceImpl implements AudioService {
     @Override
     @Transactional
     public IdsDTO deleteAudioByIds(List<Integer>ids) {
-        List<Audio> audioList = audioRepository.findAllByResourceIdInOrIdIn(ids);
+        List<Audio> audioList = audioRepository.findAllByIdIn(ids);
 
         Integer[] deletedMetaDataIds = audioList
                 .stream()

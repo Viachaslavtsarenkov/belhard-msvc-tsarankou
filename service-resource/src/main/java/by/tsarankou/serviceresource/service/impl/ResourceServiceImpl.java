@@ -43,6 +43,7 @@ public class ResourceServiceImpl implements ResourceService {
         audioMetaData.setResourceId(audioResourceFile.getId());
         audioClient.ping(audioMetaData);
         } catch (Exception e) {
+            System.out.println(e);
             //todo
         }
         return IdDTO.builder()
@@ -70,8 +71,8 @@ public class ResourceServiceImpl implements ResourceService {
         log.info("Deleted resource with id: {}",
                 audioList.stream().map(String::valueOf)
                         .collect(Collectors.joining(",")));
-        IdsDTO idsResources = audioClient.deleteMetaData(ids.stream().map(String::valueOf)
-                .collect(Collectors.joining(",")));
-        return idsResources;
+        //IdsDTO idsResources = audioClient.deleteMetaData(ids.stream().map(String::valueOf)
+//                .collect(Collectors.joining(",")));
+        return IdsDTO.builder().ids(audioList.toArray(Integer[]::new)).build();
     }
 }
