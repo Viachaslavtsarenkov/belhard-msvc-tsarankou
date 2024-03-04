@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -35,10 +36,10 @@ public class AudioController {
     }
 
     @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<IdsDTO> deleteMetaDataByIds(@PathParam(value = "ids") Integer[] ids) {
-        IdsDTO idsDTO = new IdsDTO();
-        Integer[] idsList = audioService.deleteAudioByIds(ids);
-        idsDTO.setIds(idsList);
-        return ResponseEntity.ok(idsDTO);
+    public ResponseEntity<IdsDTO> deleteMetaDataByIds(@PathParam(value = "ids") String ids) {
+        List<Integer> idsList = Arrays.stream(ids.split(","))
+                .map(Integer::valueOf).toList();
+        return ResponseEntity.ok(audioService
+                .deleteAudioByIds(idsList));
     }
 }

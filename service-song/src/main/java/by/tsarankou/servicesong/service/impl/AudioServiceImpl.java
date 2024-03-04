@@ -2,6 +2,7 @@ package by.tsarankou.servicesong.service.impl;
 
 import by.tsarankou.servicesong.data.Audio;
 import by.tsarankou.servicesong.data.repository.AudioRepository;
+import by.tsarankou.servicesong.dto.IdsDTO;
 import by.tsarankou.servicesong.dto.MetaDataDTO;
 import by.tsarankou.servicesong.service.AudioService;
 import by.tsarankou.servicesong.service.exception.NotFoundException;
@@ -50,16 +51,22 @@ public class AudioServiceImpl implements AudioService {
 
     @Override
     @Transactional
-    public Integer[] deleteAudioByIds(Integer[] ids) {
-        List<Audio> audioList = audioRepository.findAllByIdIn(List.of(ids));
+    public IdsDTO deleteAudioByIds(List<Integer>ids) {
+        List<Audio> audioList = audioRepository.findAllByResourceIdInOrIdIn(ids);
 
         Integer[] deletedMetaDataIds = audioList
                 .stream()
                 .map(Audio::getId).toArray(Integer[]::new);
+        Integer[] idsResources = audioList.stream()
+                .map(Audio::getResourceId)
+                .toArray(Integer[]::new);
 
         audioRepository.deleteAllByIdIn(List.of(deletedMetaDataIds));
         log.info("Deleted audio metadata with id: {}", Arrays.stream(deletedMetaDataIds)
                 .map(String::valueOf).collect(Collectors.joining(",")));
-        return deletedMetaDataIds;
+
+        return IdsDTO.builder()
+                .ids(idsResources)
+                .build();
     }
 }

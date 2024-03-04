@@ -9,6 +9,7 @@ import by.tsarankou.serviceresource.dto.MetaDataDTO;
 import by.tsarankou.serviceresource.service.MetaDataService;
 import by.tsarankou.serviceresource.service.ResourceService;
 import by.tsarankou.serviceresource.service.exception.NotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,7 @@ public class ResourceServiceImpl implements ResourceService {
     final MetaDataService metaDataService;
     final AudioClient audioClient;
     @Override
+    @Transactional
     public IdDTO uploadDataFile(File audioFile) throws IOException {
         Resource audioResourceFile = new Resource();
         audioResourceFile.setAudioFile(Files
@@ -49,6 +51,7 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
+    @Transactional
     public Resource findResourceById(Integer id) {
         Resource resource = resourceRepository
                 .findById(id)
@@ -58,16 +61,17 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
+    @Transactional
     public IdsDTO deleteAllResourcesByIds(List<Integer> ids) {
         List<Integer> audioList = resourceRepository
                 .findExistingIds(ids);
         resourceRepository.deleteAllByIdIn(audioList);
+
         log.info("Deleted resource with id: {}",
                 audioList.stream().map(String::valueOf)
                         .collect(Collectors.joining(",")));
-
-        return IdsDTO.builder()
-                .ids(audioList.toArray(Integer[]::new))
-                .build();
+        IdsDTO idsResources = audioClient.deleteMetaData(ids.stream().map(String::valueOf)
+                .collect(Collectors.joining(",")));
+        return idsResources;
     }
 }

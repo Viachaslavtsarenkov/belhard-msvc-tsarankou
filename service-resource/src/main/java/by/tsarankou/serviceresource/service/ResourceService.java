@@ -10,10 +10,8 @@ import java.io.IOException;
 import java.util.List;
 
 public interface ResourceService {
-    @Transactional
+
     IdDTO uploadDataFile(File audioFile) throws IOException;
-    @Transactional
     Resource findResourceById(Integer id);
-    @Transactional
     IdsDTO deleteAllResourcesByIds(List<Integer> ids);
 }
