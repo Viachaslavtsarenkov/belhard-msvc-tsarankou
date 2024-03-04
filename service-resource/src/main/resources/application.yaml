@@ -1,0 +1,23 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:7002/resources
+    username: postgres
+    password: root
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+     ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  servlet.multipart.max-file-size: 10MB
+  servlet.multipart.max-request-size: 10MB
+my:
+  client:
+    audio:
+     scheme: http
+     host: localhost
+     port: 8081
+     endpoint: songs
+
