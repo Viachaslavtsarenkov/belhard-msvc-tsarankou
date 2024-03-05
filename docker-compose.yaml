@@ -15,17 +15,17 @@ services:
   resources-db:
     image: "postgres:16-alpine"
     environment:
-      - POSTGRES_PASSWORD=root
-      - POSTGRES_DB=resources
+      - POSTGRES_PASSWORD=${PASSWORD}
+      - POSTGRES_DB=${RESOURCE_DB}
     expose:
       - 5432
     volumes:
-      - /resource-db:/var/lib/postgresql/data
+      - /resources-db:/var/lib/postgresql/data
   songs-db:
     image: "postgres:16-alpine"
     environment:
-      - POSTGRES_PASSWORD=root
-      - POSTGRES_DB=songs
+      - POSTGRES_PASSWORD=${PASSWORD}
+      - POSTGRES_DB=${SONGS_DB}
     expose:
       - 5432
     volumes:
