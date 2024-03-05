@@ -1,0 +1,32 @@
+version: "3.8"
+services:
+  resource-service:
+    build: service-resource
+    ports:
+      - "8080:8080"
+    depends_on:
+      - resources-db
+  songs-service:
+    build: service-song
+    ports:
+      - "8081:8080"
+    depends_on:
+      - songs-db
+  resources-db:
+    image: "postgres:16-alpine"
+    environment:
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=resources
+    expose:
+      - 5432
+    volumes:
+      - /resource-db:/var/lib/postgresql/data
+  songs-db:
+    image: "postgres:16-alpine"
+    environment:
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=songs
+    expose:
+      - 5432
+    volumes:
+      - /songs-db:/var/lib/postgresql/data
