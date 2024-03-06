@@ -1,13 +1,23 @@
 # belhard-msvc-tsarankou
 
-### Steps for starting project
+## Steps for starting project:
 * clone repository
-* create PosgreSQL DB in Docker:
+* open  folder of project in terminal
+* start command in terminal:
+***<br>docker compose up***
+* after starting, you can use the application on your local server
+* stop project in terminal: 
+***<br>docker compose down***
+## Ports:
+ * To use resource service on port 8080 on your local server: http://localhost:8080/resources 
+ <br> Inside of container resource service works on port 8080
+ * To use songs service on port 8081 on your local server: http://localhost:8081/songs
+ <br> Inside of container songs service works on port 8080
+
+
+
+
+
+
   
 
-docker run --name resourcesDB -p 7002:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=root -e POSTGRES_DB=resources -d postgres
-
-docker run --name audioDB -p 7003:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=root -e POSTGRES_DB=audio -d postgres
-* start project in IDE
-* Module resource works on port 8080
-* Module song works on port 8081

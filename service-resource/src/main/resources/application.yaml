@@ -1,8 +1,6 @@
-server:
-  port: 8080
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:7002/resources
+    url: jdbc:postgresql://resources-db:5432/resources
     username: postgres
     password: root
     driver-class-name: org.postgresql.Driver
@@ -17,7 +15,7 @@ my:
   client:
     audio:
      scheme: http
-     host: localhost
-     port: 8081
+     host: songs-service
+     port: 8080
      endpoint: songs
 
