@@ -17,8 +17,8 @@ services:
     environment:
       - POSTGRES_PASSWORD=${PASSWORD}
       - POSTGRES_DB=${RESOURCE_DB}
-    expose:
-      - 5432
+    ports:
+      - "7001:5432"
     volumes:
       - /resources-db:/var/lib/postgresql/data
   songs-db:
@@ -26,7 +26,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=${PASSWORD}
       - POSTGRES_DB=${SONGS_DB}
-    expose:
-      - 5432
+    ports:
+      - "7002:5432"
     volumes:
       - /songs-db:/var/lib/postgresql/data
