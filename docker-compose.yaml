@@ -1,5 +1,9 @@
 version: "3.8"
 services:
+  service-discovery:
+    build: ./service-discovery
+    ports:
+      - "8761:8761"
   localstack:
     image: localstack/localstack:3.0.2
     ports:
@@ -14,8 +18,11 @@ services:
       - DATABASE_PASSWORD=${PASSWORD}
       - DATABASE_URL=jdbc:postgresql://resources-db:5432/${RESOURCE_DB}
       - DATABASE_USER=${USER}
+      - EUREKA_CLIENT_URL=${SERVICE_DISCOVERY_URL}
     depends_on:
       - resources-db
+      - localstack
+      - service-discovery
   songs-service:
     build: service-song
     expose:
@@ -25,8 +32,10 @@ services:
       - DATABASE_PASSWORD=${PASSWORD}
       - DATABASE_URL=jdbc:postgresql://songs-db:5432/${SONGS_DB}
       - DATABASE_USER=${USER}
+      - EUREKA_CLIENT_URL=${SERVICE_DISCOVERY_URL}
     depends_on:
       - songs-db
+      - service-discovery
   resources-db:
     image: "postgres:16-alpine"
     environment:
