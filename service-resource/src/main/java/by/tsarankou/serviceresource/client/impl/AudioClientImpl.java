@@ -44,7 +44,7 @@ public class AudioClientImpl implements AudioClient {
                 .uri(uri -> uri.scheme(audioClientConfig.getScheme())
                         .host(audioClientConfig.getHost())
                         .port(audioClientConfig.getPort())
-                        .queryParam(ids)
+                        .queryParam("ids",ids)
                         .path(audioClientConfig.getEndpoint())
                         .build())
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
