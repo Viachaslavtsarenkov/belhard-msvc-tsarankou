@@ -67,3 +67,10 @@ services:
     restart: always
     volumes:
       - /songs-db:/var/lib/postgresql/data
+  service-charlie:
+    build: ./service-charlie
+    expose:
+      - "8080"
+    restart: always
+    depends_on:
+      - message-broker
