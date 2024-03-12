@@ -39,6 +39,7 @@ dependencies {
     implementation 'software.amazon.awssdk:apache-client'
     /* Discovery */
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
 }
 
 tasks.named('test') {

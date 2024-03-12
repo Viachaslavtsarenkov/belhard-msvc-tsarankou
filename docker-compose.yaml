@@ -6,7 +6,7 @@ services:
       - "5672:5672"
       - "15672:15672"
   service-discovery:
-    build: ./service-discovery
+    build: service-discovery
     ports:
       - "8761:8761"
   localstack:
@@ -29,6 +29,7 @@ services:
       - localstack
       - songs-service
       - service-discovery
+      - message-broker
   songs-service:
     build: service-song
     expose:
@@ -67,8 +68,8 @@ services:
     restart: always
     volumes:
       - /songs-db:/var/lib/postgresql/data
-  service-charlie:
-    build: ./service-charlie
+  resource-processor:
+    build: ./resource-processor
     expose:
       - "8080"
     restart: always

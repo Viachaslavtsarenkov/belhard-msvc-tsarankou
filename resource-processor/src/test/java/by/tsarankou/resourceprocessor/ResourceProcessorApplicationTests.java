@@ -1,10 +1,10 @@
-package by.tsarankou.servicecharlie;
+package by.tsarankou.resourceprocessor;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ServiceCharlieApplicationTests {
+class ResourceProcessorApplicationTests {
 
     @Test
     void contextLoads() {

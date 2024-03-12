@@ -1,0 +1,16 @@
+spring:
+  rabbitmq:
+    host: message-broker
+    username: guest
+    password: guest
+my:
+  client:
+    resource:
+      id: RESOURCE-SERVICE
+      endpoint: resources
+server:
+  port: 8761
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
