@@ -1,6 +1,6 @@
-package by.tsarankou.serviceresource.service;
+package by.tsarankou.resourceprocessor.service;
 
-import by.tsarankou.serviceresource.dto.MetaDataDTO;
+import by.tsarankou.resourceprocessor.dto.MetaDataDTO;
 import lombok.NoArgsConstructor;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.Metadata;

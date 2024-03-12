@@ -1,6 +1,10 @@
 spring:
   application:
     name: resource-service
+  rabbitmq:
+    host: message-broker
+    username: guest
+    password: guest
   datasource:
     url: ${DATABASE_URL}
     username: ${DATABASE_USER}
@@ -20,7 +24,7 @@ eureka:
 my:
   client:
     audio:
-     id: SERVICE-SONGS
+     id: SONGS-SERVICE
      endpoint: songs
     s3:
      url: http://localstack:4566

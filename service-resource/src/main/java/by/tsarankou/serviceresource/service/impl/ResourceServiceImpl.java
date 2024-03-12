@@ -2,12 +2,11 @@ package by.tsarankou.serviceresource.service.impl;
 
 import by.tsarankou.serviceresource.client.AudioClient;
 import by.tsarankou.serviceresource.client.FileStorageClient;
+import by.tsarankou.serviceresource.client.MessagePublisher;
 import by.tsarankou.serviceresource.data.Resource;
 import by.tsarankou.serviceresource.data.repository.ResourceRepository;
 import by.tsarankou.serviceresource.dto.IdDTO;
 import by.tsarankou.serviceresource.dto.IdsDTO;
-import by.tsarankou.serviceresource.dto.MetaDataDTO;
-import by.tsarankou.serviceresource.service.MetaDataService;
 import by.tsarankou.serviceresource.service.ResourceService;
 import by.tsarankou.serviceresource.service.exception.NotFoundException;
 import jakarta.transaction.Transactional;
@@ -31,9 +30,9 @@ import java.util.stream.Collectors;
 public class ResourceServiceImpl implements ResourceService {
 
     private final ResourceRepository resourceRepository;
-    private final MetaDataService metaDataService;
     private final AudioClient audioClient;
     private final FileStorageClient fileStorageClient;
+    private final MessagePublisher messagePublisher;
     @Override
     @Transactional
     public IdDTO uploadDataFile(File audioFile) throws IOException, TikaException, SAXException {
@@ -44,10 +43,7 @@ public class ResourceServiceImpl implements ResourceService {
         audioResourceFile.setAudioFile(idSavedAudioFile);
         resourceRepository.save(audioResourceFile);
         log.info("Created resource with id: {}, AWS link {}", audioResourceFile.getId(), idSavedAudioFile);
-        MetaDataDTO audioMetaData = metaDataService
-                   .getMetaDataFromFile(audioFile);
-        audioMetaData.setResourceId(audioResourceFile.getId());
-        audioClient.ping(audioMetaData);
+        messagePublisher.postMessage("Saved with id:" + audioResourceFile.getId());
         return new IdDTO(audioResourceFile.getId());
     }
 

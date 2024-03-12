@@ -1,4 +1,4 @@
-package by.tsarankou.serviceresource.dto;
+package by.tsarankou.resourceprocessor.dto;
 
 import lombok.Builder;
 import lombok.Data;
