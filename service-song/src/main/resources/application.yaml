@@ -1,5 +1,6 @@
 spring:
-  application: songs-service
+  application:
+    name: songs-service
   datasource:
     url: ${DATABASE_URL}
     username: ${DATABASE_USER}

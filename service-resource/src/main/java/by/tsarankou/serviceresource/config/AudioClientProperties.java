@@ -8,8 +8,6 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties("my.client.audio")
 public class AudioClientProperties {
-    private String scheme;
-    private String host;
-    private String port;
+    private String id;
     private String endpoint;
 }

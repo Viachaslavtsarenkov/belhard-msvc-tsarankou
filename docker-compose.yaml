@@ -27,6 +27,9 @@ services:
     build: service-song
     expose:
       - "8080"
+    deploy:
+      mode: replicated
+      replicas: 3
     restart: always
     environment:
       - DATABASE_PASSWORD=${PASSWORD}

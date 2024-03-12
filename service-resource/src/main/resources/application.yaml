@@ -20,9 +20,7 @@ eureka:
 my:
   client:
     audio:
-     scheme: http
-     host: songs-service
-     port: 8080
+     id: SERVICE-SONGS
      endpoint: songs
     s3:
      url: http://localstack:4566
