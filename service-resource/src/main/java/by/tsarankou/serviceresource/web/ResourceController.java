@@ -6,6 +6,7 @@ import by.tsarankou.serviceresource.service.ResourceService;
 import com.uwyn.jhighlight.tools.FileUtils;
 import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
+import org.apache.tika.exception.TikaException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.xml.sax.SAXException;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -33,7 +35,7 @@ public class ResourceController {
     private final ResourceService resourceService;
 
     @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<IdDTO> uploadNewResource(@RequestParam(name = "audioFile")MultipartFile audioFile) throws IOException {
+    public ResponseEntity<IdDTO> uploadNewResource(@RequestParam(name = "audioFile") MultipartFile audioFile) throws IOException, TikaException, SAXException {
 
         File convFile = new File( audioFile.getOriginalFilename() );
         FileOutputStream fos = new FileOutputStream( convFile );
@@ -49,9 +51,15 @@ public class ResourceController {
     }
 
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<byte[]> getResourceBinaryData(@PathVariable(name = "id") Integer id) {
+    public ResponseEntity<byte[]> getResourceBinaryData(@PathVariable(name = "id") Integer id) throws IOException {
         return ResponseEntity
-                .ok(resourceService.findResourceById(id).getAudioFile());
+                .ok(resourceService.findResourceById(id));
+    }
+
+    @GetMapping()
+    public ResponseEntity<List<byte[]>> findAllAudio() {
+        resourceService.findAllResources();
+        return ResponseEntity.ok(null);
     }
 
     @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)

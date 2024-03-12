@@ -51,21 +51,18 @@ public class AudioServiceImpl implements AudioService {
     @Override
     @Transactional
     public IdsDTO deleteAudioByIds(List<Integer>ids) {
-        List<Audio> audioList = audioRepository.findAllByIdIn(ids);
+        List<Audio> audioList = audioRepository.findAllByResourceIdIn(ids);
 
         Integer[] deletedMetaDataIds = audioList
                 .stream()
                 .map(Audio::getId).toArray(Integer[]::new);
-        Integer[] idsResources = audioList.stream()
-                .map(Audio::getResourceId)
-                .toArray(Integer[]::new);
 
         audioRepository.deleteAllByIdIn(List.of(deletedMetaDataIds));
         log.info("Deleted audio metadata with id: {}", Arrays.stream(deletedMetaDataIds)
                 .map(String::valueOf).collect(Collectors.joining(",")));
 
         return IdsDTO.builder()
-                .ids(idsResources)
+                .ids(ids.stream().toArray(Integer[]::new))
                 .build();
     }
 }

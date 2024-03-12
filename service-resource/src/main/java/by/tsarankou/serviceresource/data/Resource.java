@@ -7,7 +7,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,9 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
 import java.io.Serializable;
-import java.sql.Blob;
 
 @Entity
 @Table(name = "Resource")
@@ -37,7 +34,6 @@ public class Resource implements Serializable {
     private int id;
 
     @Column(name="audioFile")
-    @Lob
-    private byte[] audioFile;
+    private String audioFile;
 
 }

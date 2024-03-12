@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface AudioRepository extends CrudRepository<Audio, Integer> {
     void deleteAllByIdIn(Collection<Integer> ids);
-    List<Audio> findAllByIdIn(Collection<Integer> ids);
+    List<Audio> findAllByResourceIdIn(Collection<Integer> ids);
 }
