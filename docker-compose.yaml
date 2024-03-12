@@ -1,5 +1,10 @@
 version: "3.8"
 services:
+  message-broker:
+    image: rabbitmq:3.12.10
+    ports:
+      - "5672:5672"
+      - "15672:15672"
   service-discovery:
     build: ./service-discovery
     ports:
@@ -22,6 +27,7 @@ services:
     depends_on:
       - resources-db
       - localstack
+      - songs-service
       - service-discovery
   songs-service:
     build: service-song
