@@ -1,6 +1,7 @@
 package by.tsarankou.servicesong.data.repository;
 
 import by.tsarankou.servicesong.data.Audio;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,7 +9,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Repository
-public interface AudioRepository extends CrudRepository<Audio, Integer> {
+public interface AudioRepository extends JpaRepository<Audio, Integer> {
     void deleteAllByIdIn(Collection<Integer> ids);
     List<Audio> findAllByResourceIdIn(Collection<Integer> ids);
 }
