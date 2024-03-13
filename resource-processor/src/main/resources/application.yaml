@@ -6,8 +6,13 @@ spring:
 my:
   client:
     resource:
-      id: RESOURCE-SERVICE
+      schema: http
+      host: resource-service
+      port: 8080
       endpoint: resources
+    songs:
+      id: SONGS-SERVICE
+      endpoint: songs
 server:
   port: 8761
 eureka:

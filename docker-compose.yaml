@@ -5,10 +5,12 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+    restart: always
   service-discovery:
     build: service-discovery
     ports:
       - "8761:8761"
+    restart: always
   localstack:
     image: localstack/localstack:3.0.2
     ports:
@@ -17,7 +19,7 @@ services:
   resource-service:
     build: service-resource
     ports:
-      - "8080:8080"
+      - "8084:8080"
     restart: always
     environment:
       - DATABASE_PASSWORD=${PASSWORD}

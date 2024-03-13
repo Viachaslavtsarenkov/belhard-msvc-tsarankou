@@ -2,6 +2,9 @@ package by.tsarankou.resourceprocessor.client.impl;
 
 import by.tsarankou.resourceprocessor.client.ResourceClient;
 import by.tsarankou.resourceprocessor.config.ResourceClientProperties;
+import by.tsarankou.resourceprocessor.config.SongsClientProperties;
+import by.tsarankou.resourceprocessor.dto.IdDTO;
+import by.tsarankou.resourceprocessor.dto.MetaDataDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.client.ServiceInstance;
@@ -18,19 +21,18 @@ import java.io.File;
 public class ResourceClientImpl implements ResourceClient {
 
     private final WebClient webClient;
-    private final ResourceClientProperties audioClientConfig;
+    private final ResourceClientProperties resourceClientConfig;
+    private final SongsClientProperties songsClientProperties;
     private final LoadBalancerClient loadBalancerClient;
 
     @Override
     public byte[] getResource(Integer id) {
-        ServiceInstance instance = loadBalancerClient.choose(audioClientConfig.getId());
-        log.info("Choose instance {} of {} with LoadBalancerClient", instance.getInstanceId(), instance.getServiceId());
         log.info("Sending request to Resource: {}", id);
         byte[] response = webClient.get()
-                .uri(uri -> uri.scheme(instance.getScheme() + "/" + id)
-                        .host(instance.getHost())
-                        .port(instance.getPort())
-                        .path(audioClientConfig.getEndpoint())
+                .uri(uri -> uri.scheme(resourceClientConfig.getSchema())
+                        .host(resourceClientConfig.getHost())
+                        .port(resourceClientConfig.getPort())
+                        .path(resourceClientConfig.getEndpoint() + "/" + id)
                         .build())
                 .retrieve()
                 .bodyToMono(byte[].class)
@@ -38,4 +40,20 @@ public class ResourceClientImpl implements ResourceClient {
         log.info("Received response from Resource: {}", response);
         return response;
     }
+
+    @Override
+    public void sentMetadataToSongsService(MetaDataDTO metaDataDTO) {
+        ServiceInstance instance = loadBalancerClient.choose(songsClientProperties.getId());
+        log.info("Choose instance {} of {} with LoadBalancerClient", instance.getInstanceId(), instance.getServiceId());
+        log.info("Sending request to AUDIO: {}", metaDataDTO.getResourceId());
+        IdDTO response  = webClient.post().uri(uri -> uri.scheme((instance.getScheme()))
+                .host(instance.getHost())
+                .port(instance.getPort())
+                .path(songsClientProperties.getEndpoint())
+                .build()).retrieve().bodyToMono(IdDTO.class)
+                .block();
+        log.info("Received response from Audio: {}", response);
+    }
+
+
 }

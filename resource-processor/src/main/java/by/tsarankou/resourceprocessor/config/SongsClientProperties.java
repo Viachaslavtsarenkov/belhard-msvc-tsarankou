@@ -4,13 +4,10 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-
 @Data
 @Component
-@ConfigurationProperties("my.client.resource")
-public class ResourceClientProperties {
-    private String schema;
-    private String host;
-    private String port;
+@ConfigurationProperties("my.client.songs")
+public class SongsClientProperties {
+    private String id;
     private String endpoint;
 }

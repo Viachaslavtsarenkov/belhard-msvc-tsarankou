@@ -18,7 +18,7 @@ public class MessagingConfig {
 
     @Bean
     public TopicExchange topicExchange() {
-        return new TopicExchange("my-exchange");
+        return new TopicExchange("my-exchange",false, false);
     }
 
     @Bean
