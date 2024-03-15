@@ -38,7 +38,7 @@ public class Audio implements Serializable {
     private String album;
     @Column(name = "length")
     private String length;
-    @Column(name = "resourceId", nullable = false)
+    @Column(name = "resourceId")
     private int resourceId;
     @Column(name = "year")
     private int year;
