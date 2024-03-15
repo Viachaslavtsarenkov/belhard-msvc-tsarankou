@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Data
 @Component
-@ConfigurationProperties("my.client.songs")
+@ConfigurationProperties("my.client.audio")
 public class SongsClientProperties {
     private String id;
     private String endpoint;
