@@ -25,6 +25,6 @@ eureka:
       defaultZone: ${EUREKA_CLIENT_URL}
 broker:
     resource:
-      createQueue: queue-create-resource
+      queue: queue-create-resource
       topic: create-resource-topic
-      createRouting: create.resource.#
+      routing: create.resource.#

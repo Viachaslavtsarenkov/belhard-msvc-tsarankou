@@ -69,13 +69,12 @@ public class ResourceServiceImpl implements ResourceService {
                 .toList();
 
         resourceRepository.deleteAllByIdIn(audioList);
-        log.info("Deleted resource with id: {}",
-                audioList.stream().map(String::valueOf)
-                        .collect(Collectors.joining(",")));
+        String deletedData = audioList.stream().map(String::valueOf)
+                .collect(Collectors.joining(","));
+        log.info("Deleted resource with id: {}", deletedData);
         fileStorageClient.deleteResource(bucketsIds);
-
-        return audioClient.deleteMetaData(audioList.stream().map(String::valueOf)
-                .collect(Collectors.joining(",")));
+        messagePublisher.deleteMessage(deletedData);
+        return null;
     }
 
     @Override

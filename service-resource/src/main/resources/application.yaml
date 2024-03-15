@@ -34,3 +34,8 @@ my:
      secretKey: fake_secret_key
      bucket: com.tsarankou.my
      region: us-west-1
+broker:
+  resource:
+    createResourceRouting: create.resource.#
+    resourceTopic: create-resource-topic
+    deleteResourceQueue: delete.resource.#

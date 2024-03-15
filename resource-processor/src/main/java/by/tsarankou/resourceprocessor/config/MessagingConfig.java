@@ -16,7 +16,7 @@ public class MessagingConfig {
 
     @Bean
     public Queue createQueue() {
-        return new Queue(resourceRabbitProperties.getCreateQueue(), false);
+        return new Queue(resourceRabbitProperties.getQueue(), false);
     }
 
     @Bean
@@ -28,7 +28,7 @@ public class MessagingConfig {
     public Binding binding(Queue queue, TopicExchange topicExchange) {
         return BindingBuilder.bind(queue)
                 .to(topicExchange)
-                .with(resourceRabbitProperties.getCreateRouting());
+                .with(resourceRabbitProperties.getRouting());
     }
 
 }

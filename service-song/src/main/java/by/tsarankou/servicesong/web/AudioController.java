@@ -20,7 +20,6 @@ import java.util.List;
 public class AudioController {
 
     private final AudioService audioService;
-
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<IdDTO> uploadMetaDate(@RequestBody MetaDataDTO metaDataDTO) {
         IdDTO idDTO = new IdDTO();
@@ -33,13 +32,5 @@ public class AudioController {
     public ResponseEntity<Audio> findMetaDataById(@PathVariable(value = "id") Integer id) {
         return ResponseEntity
                 .ok(audioService.findAudioById(id));
-    }
-
-    @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<IdsDTO> deleteMetaDataByIds(@PathParam(value = "ids") String ids) {
-        List<Integer> idsList = Arrays.stream(ids.split(","))
-                .map(Integer::valueOf).toList();
-        return ResponseEntity.ok(audioService
-                .deleteAudioByIds(idsList));
     }
 }

@@ -26,7 +26,7 @@ public class MessageListener {
     private final SongClient songClient;
     private final MetaDataService metaDataService;
 
-    @RabbitListener(queues = "${broker.resource.create.Queue}")
+    @RabbitListener(queues = "${broker.resource.queue}")
     public void ping(String payload) throws IOException, TikaException, SAXException {
         int id = Integer.parseInt(payload.split(":")[1]);
         byte[] resource = resourceClient.getResource(id);
