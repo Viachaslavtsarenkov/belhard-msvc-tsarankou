@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Data
 @Component
-@ConfigurationProperties("broker.queue.resource")
+@ConfigurationProperties("broker.resource")
 public class ResourceRabbitProperties {
     private String createQueue;
     private String topic;
