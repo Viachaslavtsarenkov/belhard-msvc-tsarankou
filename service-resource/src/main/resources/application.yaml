@@ -17,6 +17,8 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
   servlet.multipart.max-file-size: 10MB
   servlet.multipart.max-request-size: 10MB
+  codec:
+    max-in-memory-size: 10MB
 eureka:
   client:
     service-url:

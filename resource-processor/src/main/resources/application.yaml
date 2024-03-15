@@ -1,8 +1,12 @@
 spring:
+  application:
+    name: resource-processor
   rabbitmq:
     host: message-broker
     username: guest
     password: guest
+  codec:
+    max-in-memory-size: 10MB
 my:
   client:
     resource:
@@ -10,12 +14,17 @@ my:
       host: resource-service
       port: 8080
       endpoint: resources
-    songs:
+    audio:
       id: SONGS-SERVICE
       endpoint: songs
 server:
   port: 8761
 eureka:
   client:
-    register-with-eureka: false
-    fetch-registry: false
+    service-url:
+      defaultZone: ${EUREKA_CLIENT_URL}
+broker:
+    resource:
+      createQueue: queue-create-resource
+      topic: create-resource-topic
+      createRouting: create.resource.#
